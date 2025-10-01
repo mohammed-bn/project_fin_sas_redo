@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <string.h>
 
-// #include "fonction.c"
 
 #define ROUGE "\033[1;31m"
 #define VERT "\033[1;32m"
@@ -19,7 +18,7 @@ typedef struct {
     char nom[100];
     char prenom[100];
     int id;
-    char email[500];
+    char email[300];
     float solde;
 } info_client;
 
@@ -37,18 +36,20 @@ typedef struct {
 extern produits prd[10];
 
 // Function prototypes
-void G_creation_profil();
-void G_solde_vr();
 
 void system_dachat_client();
-
+void G_creation_profil();
+void G_profil_clion();
+void consulter();
+void modifier_profil();
+void G_solde_vr();
 void data_prduit();
 void affichage_produit();
 void cataloge_prd();
-void G_profil_clion();
-
 void recherch_produit();
-void consulter();
-void modifier_profil();
-
+void data_prduit();
+int m_strcasecmp(char s1[], char s2[]);
+void selection_produit();
+void details_produit();
+void tri_produit();
 #endif
