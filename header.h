@@ -35,6 +35,15 @@ typedef struct {
 
 extern produits prd[10];
 
+typedef struct 
+{
+    char nom_prd_a[30];
+    float prix_acha;
+} Achat;
+
+extern Achat op_acha[100]; // operation achats
+extern int nb_achat;
+extern float prix_total;
 // Function prototypes
 
 void system_dachat_client();
@@ -48,8 +57,11 @@ void affichage_produit();
 void cataloge_prd();
 void recherch_produit();
 void data_prduit();
-int m_strcasecmp(char s1[], char s2[]);
+int  m_strcasecmp(char s1[], char s2[]);
 void selection_produit();
 void details_produit();
 void tri_produit();
+void statistique();
+
+
 #endif

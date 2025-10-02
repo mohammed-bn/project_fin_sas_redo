@@ -2,6 +2,9 @@
 
 info_client clion[1];
 produits prd[10]; 
+Achat op_acha[100];
+int nb_achat = 0;
+float prix_total = 0.0;
 
 int m_strcasecmp(char s1[], char s2[])
 {
@@ -31,6 +34,35 @@ int m_strcasecmp(char s1[], char s2[])
     return s1[i] - s2[i];
 }
 
+char* m_strcapy(char distination[], char source[])
+{
+    int i = 0;
+    while (source[i] != '\0')
+    {
+        distination[i] = source[i]; 
+        i++;
+    }
+    distination[i] = '\0';
+    return distination;
+}
+
+void statistique()
+{
+    printf(JUEN"===============votre factur==============\n"RESET);
+    if (nb_achat == 0)
+    {
+        printf(ROUGE"auccun opperation d achat\n"RESET);
+    }
+    else
+    {
+        for (int i = 0; i < nb_achat; i++)
+        {
+            printf(viole"%d_ %s ; %.2f \n"RESET, i+1, op_acha[i].nom_prd_a, op_acha[i].prix_acha);
+        }
+        printf(VERT"prix total : %.2f \n", prix_total);
+        printf("nomber produit achat : %d\n"RESET, nb_achat);
+    }
+}
 
 void selection_produit()
 {
@@ -62,8 +94,14 @@ void selection_produit()
             }
             clion[0].solde = clion[0].solde - prd[i].prix;
             prd[i].stock = prd[i].stock - 1;
+            
+            m_strcapy(op_acha[nb_achat].nom_prd_a, prd[i].nom_prd);
+            op_acha[nb_achat].prix_acha = prd[i].prix;
+            nb_achat++;
+            prix_total = prix_total + prd[i].prix;
             printf(VERT"operation d achat termine avec un succee => le nouveau solde: %.2f\n"RESET, clion[0].solde);
             return;
+
         }
     }
     if (trouve != 1)
@@ -351,11 +389,10 @@ void cataloge_prd()
     printf("2_Recherche produits.\n");
     printf("3_Tri des produits.\n");
     printf("4_Details produit\n");
-    printf("5_Produits predefinis\n");
-    printf("6_Quiter le programe\n");
+    printf("5_Quiter le programe\n");
     printf("veuillez siasir votre chois : "RESET);
     scanf("%d", &chois);
-    while (chois < 1 || chois > 6)
+    while (chois < 1 || chois > 5)
     {
         printf(ROUGE"le nomber que vous entrez inccorect veuillez saisir un nomber entre 1 et 6 : \n"RESET);
         scanf("%d", &chois);
@@ -377,6 +414,9 @@ void cataloge_prd()
             system_dachat_client();
         case 4:
             details_produit();
+            system_dachat_client();
+            break;
+        case 5:
             break;
 
     }
@@ -434,9 +474,10 @@ void G_profil_clion()
     printf(viole"1_ Creation de profil.\n");
     printf("2_ Modification du profil.\n");
     printf("3_ Consultation du profil.\n");
+    printf("4_ retour\n");
     printf("veuillez sisi: ");
     scanf("%d", &chois);
-    while (chois < 1 || chois > 3)
+    while (chois < 1 || chois > 4)
     {
         printf(ROUGE"Attention! le nomber in correct veuillez saisir votre choix: "RESET);
         scanf("%d",&chois);
@@ -455,10 +496,11 @@ void G_profil_clion()
         consulter();
         system_dachat_client();
         break;
+    case 4:
+        system_dachat_client();
     default:
         break;
     }
-
 }
 
 void system_dachat_client()
@@ -482,13 +524,25 @@ void system_dachat_client()
     {
         case 1: 
             G_profil_clion();
+            system_dachat_client();
             break;
         case 2: 
             G_solde_vr();
+            system_dachat_client();
             break;
         case 3:
             cataloge_prd();
+            system_dachat_client();
             break;
-
+        case 4:
+            selection_produit();
+            system_dachat_client();
+            break;
+        case 5:
+            statistique();
+            system_dachat_client();
+            break;
+        case 6:
+            break;
     }
 }
